@@ -1,9 +1,17 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { Entry } from '../../model/entry';
 import { EntryDataServiceProvider } from '../../providers/entry-data-service/entry-data-service';
 import { AlertController } from 'ionic-angular';
+
+
+
+const PLACEHOLDER_IMAGE: string = "/assets/imgs/placeholder.png";
+const SPINNER_IMAGE: string = "/assets/imgs/spinner.gif";
+
+
 
 /**
  * Generated class for the EntryDetailPage page.
@@ -18,10 +26,16 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'entry-detail.html',
 })
 export class EntryDetailPage {
+
+
   private entry: Entry;
+  private image = PLACEHOLDER_IMAGE;
+  private Date
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private entryDataService: EntryDataServiceProvider,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController, private camera: Camera) {
     let entryKey = this.navParams.get("entryKey");
     if (entryKey === undefined) {
       this.entry = new Entry();
@@ -109,4 +123,28 @@ export class EntryDetailPage {
     this.navCtrl.pop();
   }
 
+
+  private takePic() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+    this.camera.getPicture(options).then((imageData) => {
+      console.log( imageData)
+      if (imageData) {
+        this.image = 'data:image/jpeg;base64,' + imageData; 
+        this.Date= Date() 
+
+      } else {
+        this.image = PLACEHOLDER_IMAGE;
+        this.Date= ""
+      }
+     }, (err) => {
+        this.image = PLACEHOLDER_IMAGE;
+        this.Date= ""
+     });
+    this.image = SPINNER_IMAGE;
+  }
 }

@@ -18,9 +18,11 @@
     <ion-item>
       <ion-textarea placeholder="Today I ..." [(ngModel)]="entry.text"></ion-textarea>
     </ion-item>
+    <img [src]="image"/>
   </ion-list>
   <ion-list>
     <ion-item>
+      <button ion-button full (click)="takePic()">Take Pic</button>
       <button ion-button (click)="goback()">Cancel </button>
       <button ion-button (click)="saveEntry()">Save</button>
     </ion-item>
