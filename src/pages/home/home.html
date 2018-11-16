@@ -13,16 +13,24 @@
       <button ion-button full (click)="addEntry()">Add Entry</button>
     </ion-item>
     <ion-item *ngFor="let entry of entries | orderBy: timeStamp">
-      <button ion-button clear icon-only item-start (click)="deleteEntry(entry.key)">
-        <ion-icon name="close-circle"></ion-icon>
-      </button>
+
+     
       <ion-label (click)="editEntry(entry.key)">
+        <img class="diaryimage" [src]="entry.image" />
+
         <h2>{{entry.title}}</h2>
       </ion-label>
+     
       <ion-label>
         <p>{{entry.text}}</p>
         <p>{{entry.timeStamp | date: "M/d/yy, h:mm a"}}</p>
+        
       </ion-label>
+
+      <button ion-button clear icon-only item-end (click)="deleteEntry(entry.key)">
+        <ion-icon name="close-circle"></ion-icon>
+      </button>
+
     </ion-item>
   </ion-list>
 </ion-content>
