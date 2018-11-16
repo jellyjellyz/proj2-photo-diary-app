@@ -35,7 +35,7 @@ export class EntryDataServiceProvider {
           key: childSnapshot.key,
           title: childSnapshot.val().title,
           text: childSnapshot.val().text,
-          timeStamp: childSnapshot.val().timeStamp
+          timeStamp: new Date(childSnapshot.val().timeStamp)
         };
         this.entries.push(entry);
       });
@@ -65,8 +65,10 @@ export class EntryDataServiceProvider {
       let itemRecord = {
         title: entry.title,
         text: entry.text,
-        timeStamp: entry.timeStamp
+        timeStamp: entry.timeStamp.toISOString()
+        // need to convert to string before store into firebase 
       }
+      console.log(itemRecord);
       itemRef.set(itemRecord);
     }
   }

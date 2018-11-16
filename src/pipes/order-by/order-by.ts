@@ -10,9 +10,7 @@ import { Entry } from '../../model/entry';
   name: 'orderBy',
 })
 export class OrderByPipe implements PipeTransform {
-  /**
-   * Takes a value and makes it lowercase.
-   */
+  // timeStamp: Date
   compare(a: Entry , b: Entry) {
     if (a.timeStamp < b.timeStamp)
       return 1;
