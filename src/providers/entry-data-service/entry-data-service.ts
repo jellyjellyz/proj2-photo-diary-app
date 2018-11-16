@@ -6,6 +6,7 @@ import firebase from 'firebase';
 
 import { firebaseConfig } from './config_firebase';
 
+const PLACEHOLDER_IMAGE: string = "/assets/imgs/placeholder.png";
 
 @Injectable()
 export class EntryDataServiceProvider {
@@ -35,7 +36,8 @@ export class EntryDataServiceProvider {
           key: childSnapshot.key,
           title: childSnapshot.val().title,
           text: childSnapshot.val().text,
-          timeStamp: new Date(childSnapshot.val().timeStamp)
+          timeStamp: new Date(childSnapshot.val().timeStamp),
+          image: childSnapshot.val().image
         };
         this.entries.push(entry);
       });
@@ -67,7 +69,8 @@ export class EntryDataServiceProvider {
       let itemRecord = {
         title: entry.title,
         text: entry.text,
-        timeStamp: entry.timeStamp.toISOString()
+        timeStamp: entry.timeStamp.toISOString(),
+        image: entry.image
         // need to convert to string before store into firebase 
       }
       // console.log(itemRecord);
@@ -81,7 +84,8 @@ export class EntryDataServiceProvider {
     let cloneEntry = {
       title: newEntry.title,
       text: newEntry.text,
-      timeStamp: newEntry.timeStamp.toISOString()
+      timeStamp: newEntry.timeStamp.toISOString(),
+      image: newEntry.image
     }
     childRef.set(cloneEntry);
   }
@@ -103,7 +107,8 @@ export class EntryDataServiceProvider {
       let tempItem = {
         title: entry.title,
         text: entry.text,
-        timeStamp: entry.timeStamp
+        timeStamp: entry.timeStamp,
+        image: PLACEHOLDER_IMAGE
       }
       itemRef.set(tempItem);
     }

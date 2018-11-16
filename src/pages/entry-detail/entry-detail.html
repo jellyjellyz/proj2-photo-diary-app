@@ -11,18 +11,24 @@
     <ion-item>
       <ion-input type="text" placeholder="New Entry" [(ngModel)]="entry.title"></ion-input>
     </ion-item>
+
     <ion-item></ion-item>
-    <ion-item  color="secondary">
+    <ion-item color="secondary">
+      <ion-label>Picture:</ion-label>
+    </ion-item>
+    <ion-item>
+      <img (click)="takePic()" [src]="entry.image" />
+    </ion-item>
+
+    <ion-item></ion-item>
+    <ion-item color="secondary">
       <ion-label>Thoughts and experiences: </ion-label>
     </ion-item>
     <ion-item>
       <ion-textarea placeholder="Today I ..." [(ngModel)]="entry.text"></ion-textarea>
     </ion-item>
-    <img [src]="image"/>
-  </ion-list>
-  <ion-list>
+
     <ion-item>
-      <button ion-button full (click)="takePic()">Take Pic</button>
       <button ion-button (click)="goback()">Cancel </button>
       <button ion-button (click)="saveEntry()">Save</button>
     </ion-item>

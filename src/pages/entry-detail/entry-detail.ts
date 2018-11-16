@@ -29,8 +29,6 @@ export class EntryDetailPage {
 
 
   private entry: Entry;
-  private image = PLACEHOLDER_IMAGE;
-  private Date
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -42,13 +40,15 @@ export class EntryDetailPage {
       this.entry.title = "";
       this.entry.text = "";
       this.entry.key = ""; // placeholder, will get a value after saved to firebase
+      this.entry.image = PLACEHOLDER_IMAGE;
     } else {
       this.entryDataService.getEntryByKey(entryKey).then(snapshot => {
         this.entry = {
           key: snapshot.key,
           title: snapshot.val().title,
           text: snapshot.val().text,
-          timeStamp: new Date(snapshot.val().timeStamp)
+          timeStamp: new Date(snapshot.val().timeStamp),
+          image: snapshot.val().image
         };
       });
     }
@@ -110,7 +110,7 @@ export class EntryDetailPage {
           this.entry.timeStamp = new Date(data);
           this.entryDataService.updateEntry(this.entry.key, this.entry);
         })
-        alert.onDidDismiss( () => {
+        alert.onDidDismiss(() => {
           this.navCtrl.pop();
         });
         return false;
@@ -132,19 +132,15 @@ export class EntryDetailPage {
       mediaType: this.camera.MediaType.PICTURE
     }
     this.camera.getPicture(options).then((imageData) => {
-      console.log( imageData)
+      console.log(imageData)
       if (imageData) {
-        this.image = 'data:image/jpeg;base64,' + imageData; 
-        this.Date= Date() 
-
+        this.entry.image = 'data:image/jpeg;base64,' + imageData;
       } else {
-        this.image = PLACEHOLDER_IMAGE;
-        this.Date= ""
+        this.entry.image = PLACEHOLDER_IMAGE;
       }
-     }, (err) => {
-        this.image = PLACEHOLDER_IMAGE;
-        this.Date= ""
-     });
-    this.image = SPINNER_IMAGE;
+    }, (err) => {
+      this.entry.image = PLACEHOLDER_IMAGE;
+    });
+    this.entry.image = SPINNER_IMAGE;
   }
 }
