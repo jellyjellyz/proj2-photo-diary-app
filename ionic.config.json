@@ -1,0 +1,7 @@
+{
+  "name": "proj2-photo-diary-app",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
