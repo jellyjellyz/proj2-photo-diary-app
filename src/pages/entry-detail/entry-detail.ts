@@ -29,8 +29,19 @@ export class EntryDetailPage {
       this.entry.text = "";
       this.entry.key = ""; // placeholder, will get a value after saved to firebase
     } else {
-      this.entry = this.entryDataService.getEntryByKey(entryKey);
+      this.entryDataService.getEntryByKey(entryKey).then(snapshot => {
+        this.entry = {
+          key: snapshot.key,
+          title: snapshot.val().title,
+          text: snapshot.val().text,
+          timeStamp: new Date(snapshot.val().timeStamp)
+        };
+      });
     }
+  }
+
+  public callback(param: Entry) {
+    this.entry = param;
   }
 
   private saveEntry() {

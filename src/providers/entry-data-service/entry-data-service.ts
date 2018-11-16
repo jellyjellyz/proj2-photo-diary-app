@@ -53,20 +53,11 @@ export class EntryDataServiceProvider {
     return entriesClone;
   }
 
-  public getEntryByKey(key: string):Entry {
-    // TODO
+  // return a promise
+  public getEntryByKey(key: string) {
     let parentRef = this.db.ref('/entryItems');
     let childRef = parentRef.child(key);
-    let cloneEntry: Entry = new Entry();
-    childRef.on('value', snapshot => {
-      cloneEntry = {
-        key: snapshot.key,
-        title: snapshot.val().title,
-        text: snapshot.val().text,
-        timeStamp: new Date(snapshot.val().timeStamp)
-      }
-    })
-    return cloneEntry;
+    return childRef.once('value');
   }
 
   public addEntry(entry: Entry) {
@@ -85,12 +76,20 @@ export class EntryDataServiceProvider {
   }
 
   public updateEntry(key: string, newEntry: Entry):void {
-    // TODO
-    return;
+    let parentRef = this.db.ref('/entryItems');
+    let childRef = parentRef.child(key);
+    let cloneEntry = {
+      title: newEntry.title,
+      text: newEntry.text,
+      timeStamp: newEntry.timeStamp.toISOString()
+    }
+    childRef.set(cloneEntry);
   }
 
   public removeEntry(key: string): void {
-    // TODO
+    let parentRef = this.db.ref('/entryItems');
+    let childRef = parentRef.child(key);
+    childRef.remove();
     return;
   }
 
