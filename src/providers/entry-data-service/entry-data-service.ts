@@ -55,7 +55,18 @@ export class EntryDataServiceProvider {
 
   public getEntryByKey(key: string):Entry {
     // TODO
-    return new Entry();
+    let parentRef = this.db.ref('/entryItems');
+    let childRef = parentRef.child(key);
+    let cloneEntry: Entry = new Entry();
+    childRef.on('value', snapshot => {
+      cloneEntry = {
+        key: snapshot.key,
+        title: snapshot.val().title,
+        text: snapshot.val().text,
+        timeStamp: new Date(snapshot.val().timeStamp)
+      }
+    })
+    return cloneEntry;
   }
 
   public addEntry(entry: Entry) {
@@ -68,7 +79,7 @@ export class EntryDataServiceProvider {
         timeStamp: entry.timeStamp.toISOString()
         // need to convert to string before store into firebase 
       }
-      console.log(itemRecord);
+      // console.log(itemRecord);
       itemRef.set(itemRecord);
     }
   }

@@ -13,10 +13,10 @@
       <button ion-button full (click)="addEntry()">Add Entry</button>
     </ion-item>
     <ion-item *ngFor="let entry of entries | orderBy: timeStamp">
-      <button ion-button clear icon-only item-start (click)="deleteEntry(entry.id)">
+      <button ion-button clear icon-only item-start (click)="deleteEntry(entry.key)">
         <ion-icon name="close-circle"></ion-icon>
       </button>
-      <ion-label (click)="editEntry(entry.id)">
+      <ion-label (click)="editEntry(entry.key)">
         <h2>{{entry.title}}</h2>
       </ion-label>
       <ion-label>
