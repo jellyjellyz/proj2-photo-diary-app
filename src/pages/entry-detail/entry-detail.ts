@@ -125,6 +125,7 @@ export class EntryDetailPage {
 
 
   private takePic() {
+    let originImage = this.entry.image;
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -132,14 +133,14 @@ export class EntryDetailPage {
       mediaType: this.camera.MediaType.PICTURE
     }
     this.camera.getPicture(options).then((imageData) => {
-      console.log(imageData)
+      // console.log(imageData)
       if (imageData) {
         this.entry.image = 'data:image/jpeg;base64,' + imageData;
       } else {
-        this.entry.image = PLACEHOLDER_IMAGE;
+        this.entry.image = originImage;
       }
     }, (err) => {
-      this.entry.image = PLACEHOLDER_IMAGE;
+      this.entry.image = originImage;
     });
     this.entry.image = SPINNER_IMAGE;
   }
